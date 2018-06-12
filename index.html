@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<form>
+<p>Points</p><input id="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*">
+<p>Money</p><input id="money" name="money" data-val="money" type="number" value="0" min="0">
+
+<p>You'll be buying <span id="pointsText">0</span> points for <span id="moneyText">0</span>!</p>
+
+<input id="cardNumber" name="cardNumber" type="text">
+<input id="cardExpiration" name="cardExpiration" type="text">
+<input id="cardCVC" name="cardCVC" type="text">
+<input id="cardZIP" name="cardZIP" type="text">
+</form>
+
+<script src="continue/script.js"></script>
+<script>
+var test=new Continue({
+	pointsEls:[
+		document.getElementById("points")
+		,document.getElementById("pointsText")
+	]
+	,moneyEls:[
+		document.getElementById("money")
+		,document.getElementById("moneyText")
+	]
+});
+</script>
+
+</body>
+</html>
