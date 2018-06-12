@@ -48,14 +48,20 @@ C.convert=function(to){
 C.update=function(to){
 	//Go through each relevant element
 	for(var i=0;i<C[to+'Els'].length;i++){
-		//Either put values out to values or innerHTML, depending on if the element's an input
-		if(C[to+'Els'][i].tagName==='INPUT') C[to+'Els'][i].value=C[to];
-		else{
-			//If money, output in locale's format
-			if(to==='money') C[to+'Els'][i].innerHTML=new Intl.NumberFormat('en-US',{style:'currency',currency:C.currency}).format(C[to]/100);
-			//Otherwise, it's just a regular number
-			else C[to+'Els'][i].innerHTML=C[to];
+		var value=C[to];
+		
+		//If it's outputting to money and display isn't raw, get the local display for it!
+		if(to==='money'){
+			if(C[to+'Els'][i].tagName==='INPUT'){
+				value=C[to]/100;
+			}else{
+				value=new Intl.NumberFormat('en-US',{style:'currency',currency:C.currency}).format(C[to]/100);
+			}
 		}
+		
+		//Output to the tag, whether it's a value or innerHTML
+		if(C[to+'Els'][i].tagName==='INPUT') C[to+'Els'][i].value=value;
+		else C[to+'Els'][i].innerHTML=value;
 	}
 }
 
@@ -171,10 +177,12 @@ fetch('continue/ajax.php',{
 			
 			//Add event listeners for money input(s)
 			for(var i=0;i<C['moneyEls'].length;i++){
-				if(C['moneyEls'][i].tagName==='INPUT') C['moneyEls'][i].addEventListener('input',function(){
-					C.money=this.value;
-					C.convert('points');
-				});
+				if(C['moneyEls'][i].tagName==='INPUT'){
+					C['moneyEls'][i].addEventListener('input',function(){
+						C.money=this.value*100;
+						C.convert('points');
+					});
+				}
 			}
 			
 			//On form submission
