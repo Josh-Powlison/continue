@@ -16,10 +16,12 @@ const C=this;
 function d(v,val){C[v]=(input[v]!==undefined ? input[v] : val);}
 
 /*VARIABLE				DEFAULT VALUE										*/
+d('form'			,	null												);
 d('points'			,	10													);
 d('money'			,	null												);
 d('pointsEls'		,	[]													);
 d('moneyEls'		,	[]													);
+d('messageEls'		,	[]													);
 
 ///////////////////////////////////////
 ///////////PUBLIC FUNCTIONS////////////
@@ -93,13 +95,18 @@ C.fees=function(amount,add){
 
 //Submit the information
 C.submit=function(){
-	fetch('continue.php',{
+	//Send payment info
+	fetch('continue/ajax.php',{
 		method:'POST'
-		,data:formData
-		,headers:{'Content-Type':'application/json'}
+		,body:new FormData(C.form)
 	})
-	.then(response=>response.json())
-	.then(json=>console.log(json))
+	.then(response=>{return response.json();})
+	//On successful load
+	.then(json=>{
+		console.log(json);
+		message(json.message);
+	})
+	.catch(response=>{message(response);})
 	;
 }
 
@@ -113,6 +120,13 @@ var moneyToPoints;
 ///////////////////////////////////////
 ///////////PRIVATE FUNCTIONS///////////
 ///////////////////////////////////////
+
+function message(input){
+	//Put the message inside of the relevant element(s)
+	for(var i=0;i<C['messageEls'].length;i++){
+		C['messageEls'][i].innerHTML=input;
+	}
+}
 
 ///////////////////////////////////////
 ////////////EVENT LISTENERS////////////
@@ -162,6 +176,12 @@ fetch('continue/ajax.php',{
 					C.convert('points');
 				});
 			}
+			
+			//On form submission
+			C.form.addEventListener('submit',function(event){
+				event.preventDefault();
+				C.submit();
+			});
 		}
 	}
 );

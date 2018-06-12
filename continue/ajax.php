@@ -18,7 +18,8 @@ ob_start();
 
 #Currency:points ratio. Passed to JS; the only place where the ratio is stored
 $response=[
-	'ratio'			=>	'5:1'			#Currency:points ratio
+	'call'			=>	$_POST['call']
+	,'ratio'		=>	'5:1'			#Currency:points ratio
 	,'currency'		=>	'USD'			#Currency you'll be RECEIVING payments in
 	,'totalPoints'	=>	100				#Current number of points in DB
 	,'feeCalc'		=>	'-2.9%-30'		#The fees, in percentage and amounts
@@ -27,12 +28,17 @@ $response=[
 	,'success'		=>	false
 ];
 
-$_POST['call']='get';
-
 #We consider money passed to make the payment; WE DON'T CALCULATE PAYMENT OFF POINTS, but points off money (in case there's a mistake; we don't EVER want to mischarge the user)
-if($_POST['call']){
-	$response['call']=$_POST['call'];
+
+#Get form info
+if($response['call']==='get'){
 	$response['success']=true;
+#Payment
+}else if($response['call']==='submit'){
+	if(!empty($_POST['cardNumber'])){
+		$response['success']=true;
+		echo 'I got your credit card number!';
+	}
 }else{
 	echo 'No call type passed!';
 }
