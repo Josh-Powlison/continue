@@ -1,0 +1,79 @@
+/* Forms */
+
+.continue-form{
+	margin:auto;
+	width:20rem;
+	max-width:100%;
+	border:1px solid black;
+	box-sizing:border-box;
+}
+
+.continue-total{
+	text-align:center;
+	font-size:3em;
+	margin:0;
+}
+
+.continue-purchase{
+	margin:auto;
+	display:block;
+	clear:both;
+	display:flex;
+	justify-content:center;
+	margin:.5em;
+}
+
+.continue-purchase>input{
+	width:20%;
+}
+
+.continue-card{
+	width:75%;
+	margin:auto;
+	border:1px solid black;
+}
+
+.continue-input-default{
+	margin:auto;
+	display:block;
+}
+
+.continue-message{
+	text-align:center;
+}
+
+.continue-submit{
+	width:100%;
+	display:block;
+}
+
+/* Tables */
+
+.continue-users table
+,.continue-purchases table
+,.continue-goals table{
+	margin:1em auto;
+}
+
+.continue-users td
+,.continue-purchases td
+,.continue-goals td{
+	
+	padding:.25em;
+}
+
+.continue-users td{
+	background-color:#ffefd3;
+}
+
+.continue-purchases td{
+	background-color:#ffd3f3;
+}
+
+.continue-goals td{
+	background-color:#d3edff;
+}
+
+.continue-goal-met td{
+	background-color:#d8ffd3;
+}

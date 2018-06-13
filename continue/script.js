@@ -144,7 +144,8 @@ C.submit=function(){
 		.then(json=>{
 			console.log(json);
 			message(json.message);
-			C.idempotencyKey=json.idempotencyKey;
+			
+			updateValues(json);
 		})
 		.catch(response=>{message(response);})
 		;
@@ -193,7 +194,7 @@ function goals(json){
 			continue;
 		}
 		
-		table+='<tr><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
+		table+='<tr class="continue-goal-met"><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
 	}
 	table+='</table>';
 	
@@ -208,6 +209,19 @@ function purchases(json){
 	table+='</table>';
 	
 	return table;
+}
+
+function updateValues(json){
+	C.totalPoints=json.totalPoints;
+	C.users=json.users;
+	C.purchases=json.purchases;
+	C.goals=json.goals;
+	C.idempotencyKey=json.idempotencyKey;
+	
+	document.getElementById('users').innerHTML=users(C.users);
+	document.getElementById('purchases').innerHTML=purchases(C.purchases);
+	if(C.goals) document.getElementById('goals').innerHTML=goals(C.goals);
+	document.getElementById('totalPoints').innerHTML=C.totalPoints;
 }
 
 ///////////////////////////////////////
@@ -241,17 +255,9 @@ fetch('continue/ajax.php',{
 			C.ratio=json.ratio;
 			C.currency=json.currency;
 			C.feeCalc=json.feeCalc;
-			C.totalPoints=json.totalPoints;
-			C.users=json.users;
-			C.purchases=json.purchases;
-			C.goals=json.goals;
 			C.services=json.services;
-			C.idempotencyKey=json.idempotencyKey;
 			
-			document.getElementById('users').innerHTML=users(C.users);
-			document.getElementById('purchases').innerHTML=purchases(C.purchases);
-			if(C.goals) document.getElementById('goals').innerHTML=goals(C.goals);
-			document.getElementById('totalPoints').innerHTML=C.totalPoints;
+			updateValues(json);
 			
 			//Run through services
 			if(C.services.stripe){

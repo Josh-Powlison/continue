@@ -72,56 +72,6 @@ $db=new PDO(
 
 #Get form info
 if($response['call']==='get'){
-	#Get the total point count
-	$data=$db->prepare(
-		'SELECT
-			SUM(points) AS total_points
-		FROM points'
-	);
-	
-	if($data->execute()) $response['totalPoints']=$data->fetch()['total_points'];
-	
-	#Get each user's point count
-	$data=$db->prepare(
-		'SELECT
-			SUM(points) AS points
-			,user
-		FROM points
-		GROUP BY user
-		ORDER BY points DESC'
-	);
-	
-	if($data->execute()) $response['users']=$data->fetchAll();
-	
-	#Get each individual purchase
-	$data=$db->prepare(
-		'SELECT
-			points
-			,user
-			,UNIX_TIMESTAMP(date)*1000 AS timestamp
-			,comment
-		FROM points
-		ORDER BY date DESC'
-	);
-	
-	if($data->execute()) $response['purchases']=$data->fetchAll();
-	
-	if($goals){
-		#Get goals
-		$data=$db->prepare(
-			'SELECT
-				points
-				,reward
-				,date_met AS dateMet
-			FROM goals
-			ORDER BY
-				date_met DESC
-				,points ASC'
-		);
-		
-		if($data->execute()) $response['goals']=$data->fetchAll();
-	}
-	
 	#Check what payment services are supported and get the relevant files
 	$response['services']=[];
 	foreach($services as $service => $keys){
@@ -273,6 +223,57 @@ if($response['call']==='get'){
 }else{
 	echo 'No call type passed!';
 }
+
+#Get the total point count
+$data=$db->prepare(
+	'SELECT
+		SUM(points) AS total_points
+	FROM points'
+);
+
+if($data->execute()) $response['totalPoints']=$data->fetch()['total_points'];
+
+#Get each user's point count
+$data=$db->prepare(
+	'SELECT
+		SUM(points) AS points
+		,user
+	FROM points
+	GROUP BY user
+	ORDER BY points DESC'
+);
+
+if($data->execute()) $response['users']=$data->fetchAll();
+
+#Get each individual purchase
+$data=$db->prepare(
+	'SELECT
+		points
+		,user
+		,UNIX_TIMESTAMP(date)*1000 AS timestamp
+		,comment
+	FROM points
+	ORDER BY date DESC'
+);
+
+if($data->execute()) $response['purchases']=$data->fetchAll();
+
+if($goals){
+	#Get goals
+	$data=$db->prepare(
+		'SELECT
+			points
+			,reward
+			,date_met AS dateMet
+		FROM goals
+		ORDER BY
+			date_met DESC
+			,points ASC'
+	);
+	
+	if($data->execute()) $response['goals']=$data->fetchAll();
+}
+
 
 $response['message']=ob_get_clean();
 echo json_encode($response);

@@ -32,6 +32,6 @@ You can share goals and progress with your audience so they can see where you're
 
 Put the relevant PHP packages inside of the `payment-providers` folder and then 
 
-* **Stripe**: Just add your API keys and download Stripe from https://stripe.com/docs/libraries#php
+* **Stripe**: Add your API keys to `ajax.php` and download Stripe from https://stripe.com/docs/libraries#php
 
 Make sure in the relevant `*****-payment.php` file that you `require` the correct file!

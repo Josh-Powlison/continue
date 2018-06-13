@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="styles.css">
+	<!--Continue-specific styles-->
+	<link rel="stylesheet" href="continue/styles.css">
 </head>
 <body>
 
-<form method="post">
-	<p id="totalPoints">0</p>
-	<br>Points: <input id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
-	<br>Money: <input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
+<h1>Continue</h1>
 
-	<p>You'll be buying <span id="pointsText">0</span> points for <span id="moneyText">0</span>!</p>
+<form method="post" class="continue-form">
+	<p class="continue-total" id="totalPoints">0</p>
+	<div class="continue-purchase">
+		$<input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
+		<input id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">P
+	</div>
 
-	<br>User: <input id="user" name="user" type="text">
-	<br>Email: <input id="email" name="email" type="email">
-	<div id="cardElement"></div>
-	<!--<br>Card #: <input id="cardNumber" name="cardNumber" type="text">
-	<br>Card Exp: <input id="cardExpiration" name="cardExpiration" type="text">
-	<br>Card CVC: <input id="cardCVC" name="cardCVC" type="text">
-	<br>Card ZIP: <input id="cardZIP" name="cardZIP" type="text">-->
-	<br>Services: <input id="service" name="service" value="stripe" type="text">
-	<input name="afterFees" value="0" type="hidden">
+	<div id="cardElement" class="continue-card"></div>
+	
+	<input class="continue-input-default" id="user" name="user" type="text" placeholder="Your Name">
+	<input class="continue-input-default" id="email" name="email" type="email" placeholder="address@email.com">
+
+	<input id="service" name="service" value="stripe" type="hidden">
 	<input name="idempotencyKey" value="" type="hidden">
-	<br><button>Submit</button>
+
+	<p id="messageSpot" class="continue-message"></p>
 	
-	<p id="messageSpot">Messages here!</p>
+	<button class="continue-submit">Submit</button>
 	
-	<div id="goals"></div>
-	<div id="users"></div>
-	<div id="purchases"></div>
 </form>
+
+
+<h2>Goals</h2>
+<div id="goals" class="continue-goals"></div>
+<h2>Credits</h2>
+<div id="users" class="continue-users"></div>
+<h2>Purchases</h2>
+<div id="purchases" class="continue-purchases"></div>
 
 <script src="continue/script.js"></script>
 <script>
@@ -36,11 +44,9 @@ var test=new Continue({
 	form:document.getElementsByTagName("FORM")[0]
 	,pointsEls:[
 		document.getElementById("points")
-		,document.getElementById("pointsText")
 	]
 	,moneyEls:[
 		document.getElementById("money")
-		,document.getElementById("moneyText")
 	]
 	,messageEls:[
 		document.getElementById("messageSpot")
