@@ -22,6 +22,14 @@ d('money'			,	null												);
 d('pointsEls'		,	[]													);
 d('moneyEls'		,	[]													);
 d('messageEls'		,	[]													);
+d('totalPointsEls'	,	[]													);
+d('paymentInfoEl'	,	[]													);
+d('goalsEls'		,	[]													);
+d('usersEls'		,	[]													);
+d('purchasesEls'	,	[]													);
+d('userEl'			,	[]													);
+d('emailEl'			,	[]													);
+d('serviceEl'		,	[]													);
 
 ///////////////////////////////////////
 ///////////PUBLIC FUNCTIONS////////////
@@ -107,20 +115,20 @@ C.submit=function(){
 	formData.append('money',C.money);
 	formData.append('points',C.points);
 	formData.append('moneyAfterFees',C.fees(C.money));
-	formData.append('service',document.getElementById('service').value);
+	formData.append('service',C.serviceEl.value);
 	formData.append('idempotencyKey',C.idempotencyKey);
 
 	new Promise(function(resolve,reject){
 		//Check values
-		if(!document.getElementById('email').checkValidity){
+		if(!C.emailEl.checkValidity){
 			reject('Your email is invalid!');
 		}
-		formData.append('email',document.getElementById('email').value);
+		formData.append('email',C.emailEl.value);
 		
-		if(!document.getElementById('user').checkValidity){
+		if(!C.userEl.checkValidity){
 			reject('Your username is invalid!');
 		}
-		formData.append('user',document.getElementById('user').value);
+		formData.append('user',C.userEl.value);
 		
 		//Stripe
 		if(C.services.stripe){
@@ -218,10 +226,10 @@ function updateValues(json){
 	C.goals=json.goals;
 	C.idempotencyKey=json.idempotencyKey;
 	
-	document.getElementById('users').innerHTML=users(C.users);
-	document.getElementById('purchases').innerHTML=purchases(C.purchases);
-	if(C.goals) document.getElementById('goals').innerHTML=goals(C.goals);
-	document.getElementById('totalPoints').innerHTML=C.totalPoints;
+	C.usersEls.innerHTML=users(C.users);
+	C.purchasesEls.innerHTML=purchases(C.purchases);
+	if(C.goals) C.goalsEls.innerHTML=goals(C.goals);
+	C.totalPointsEls.innerHTML=C.totalPoints;
 }
 
 ///////////////////////////////////////
@@ -272,7 +280,7 @@ fetch('continue/ajax.php',{
 					var elements=stripe.elements();
 					
 					card=elements.create('card');
-					card.mount(document.getElementById('cardElement'));
+					card.mount(C.paymentInfoEl);
 				});
 			}
 			
