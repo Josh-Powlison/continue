@@ -152,6 +152,25 @@ function users(json){
 	return table;
 }
 
+function goals(json){
+	var table='<table>';
+	
+	var nextGoal=null;
+	
+	for(var i=0;i<json.length;i++){
+		if(json[i].dateMet===null){
+			nextGoal=i;
+			table+='<tr><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>Ongoing!</td></tr>';
+			continue;
+		}
+		
+		table+='<tr><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
+	}
+	table+='</table>';
+	
+	return table;
+}
+
 function purchases(json){
 	var table='<table>';
 	for(var i=0;i<json.length;i++){
@@ -193,9 +212,12 @@ fetch('continue/ajax.php',{
 			C.totalPoints=json.totalPoints;
 			C.users=json.users;
 			C.purchases=json.purchases;
+			C.goals=json.goals;
 			
 			document.getElementById('users').innerHTML=users(C.users);
 			document.getElementById('purchases').innerHTML=purchases(C.purchases);
+			if(C.goals) document.getElementById('goals').innerHTML=goals(C.goals);
+			document.getElementById('totalPoints').innerHTML=C.totalPoints;
 			
 			var tempSplit=C.ratio.split(':');
 			pointsToMoney=tempSplit[0]/tempSplit[1];

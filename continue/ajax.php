@@ -24,6 +24,13 @@ $password='password';		#The MySQL user password
 date_default_timezone_set('UTC');	#Use the timezone you're basing your MySQL table off (http://php.net/manual/en/timezones.php)
 $language='en-us';
 
+## Data ##
+$email='joshuapowlison@gmail.com';
+
+## Custom ##
+$goals=true;		#Use goals
+$notifyMe=false;	#Receive emails when goals are met or updating fails
+
 ##########################################
 ################ SETTINGS ################
 ##########################################
@@ -93,6 +100,22 @@ if($response['call']==='get'){
 	
 	if($data->execute()) $response['purchases']=$data->fetchAll();
 	
+	if($goals){
+		#Get goals
+		$data=$db->prepare(
+			'SELECT
+				points
+				,reward
+				,date_met AS dateMet
+			FROM goals
+			ORDER BY
+				date_met DESC
+				,points ASC'
+		);
+		
+		if($data->execute()) $response['goals']=$data->fetchAll();
+	}
+	
 	$response['success']=true;
 #Payment
 }else if($response['call']==='submit'){
@@ -141,17 +164,76 @@ if($response['call']==='get'){
 		#DO NOT ASSUME LOCAL CALCULATIONS OR VALUES (other than price) PASSED ARE CORRECT EVER!!!!
 		
 		if($_POST['points']!=$points){
-			echo 'Our points calculation was off! Maybe things have changed; try refreshing the webpage and purchasing again! You sent ',$_POST['points'],' but we calculated ',$points;
+			echo 'Our points calculation was off! Maybe things have changed; try refreshing the webpage and purchasing again! You sent ',$_POST['points'],' but we calculated ',$points,'. Email ',$email,' for help.';
 		}else if(floor($_POST['moneyAfterFees'])!==floor($amount)){
-			echo 'Our money calculation after fees was off! You sent ',$_POST['moneyAfterFees'],' but we calculated ',$amount;
+			echo 'Our money calculation after fees was off! You sent ',$_POST['moneyAfterFees'],' but we calculated ',$amount,'. Email ',$email,' for help.';
 		}else if($points===0){
 			echo 'You can\'t purchase 0 points! Try a higher number, like 1.';
 		}else if($data->execute([$points,$_POST['user'],'Purchase'])){
 			$response['success']=true;
 			echo 'You successfully purchased ',$points,' points!';
+			
+			#Get the total point count
+			$data=$db->prepare(
+				'SELECT
+					SUM(points) AS total_points
+				FROM points'
+			);
+			
+			if($data->execute()) $response['totalPoints']=$data->fetch()['total_points'];
+			
+			if($notifyMe) mail(
+				$email
+				,$_POST['user'].' purchased '.$amount.' points!'
+				,'This is an automatic notification sent to you by ajax.php as part of Continue.\r\n\r\n'.$_POST['user'].' purchased '.$points.' for '.$amount.', bringint the total point count up to '.$response['totalPoints'].'!\r\n\r\nIf you don\'t want to receive these messages, disable $notifyMe in ajax.php'
+				,'From: '.$email
+			);
+			
+			if($goals){
+				#Get the total point count
+				$data=$db->prepare(
+					'SELECT
+						id
+						,reward
+					FROM goals
+					WHERE
+						date_met IS NULL
+						AND points<=?'
+				);
+				
+				if($data->execute([$response['totalPoints']])){
+					while($row=$data->fetch()){
+						if($notifyMe) mail(
+							$email
+							,'Reward '.$row['id'].' has been met with '.$response['totalPoints']
+							,'This is an automatic notification sent to you by ajax.php as part of Continue.\r\n\r\nCongratulations on the accomplishment! '.$_POST['user'].' made it happen by buying '.$points.' for '.$amount.'\r\n\r\nIf you don\'t want to receive these messages, disable $notifyMe in ajax.php'
+							,'From: '.$email
+						);
+					}
+				}
+				
+				#Get the total point count
+				$data=$db->prepare(
+					'UPDATE goals
+					SET
+						date_met=NOW()
+					WHERE
+						date_met IS NULL
+						AND points<=?'
+				);
+				
+				if(!$data->execute([$response['totalPoints']])){
+					if($notifyMe) mail(
+						$email
+						,'A goal was met, but the table can\'t be updated'
+						,'This is an automatic notification sent to you by ajax.php as part of Continue.\r\n\r\nCongratulations on the accomplishment, but you do have an error updating the goals! '.$_POST['user'].' made the goal happen by buying '.$points.' for '.$amount.'\r\n\r\nIf you don\'t want to receive these messages, disable $notifyMe in ajax.php'
+						,'From: '.$email
+					);
+				}
+			}
+			
 		}else{
-			#General failure
-			echo 'We failed to submit your purchase! Email for help.';
+			echo 'We failed to submit your purchase! Email ',$email,' for help.';
 		}
 	}else{
 		echo 'Payment failed: because we don\'t accept payments yet!';
