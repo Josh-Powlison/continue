@@ -5,7 +5,7 @@
 <body>
 
 <form method="post">
-	<p>Points</p><input id="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*">
+	<p>Points</p><input id="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
 	<p>Money</p><input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
 
 	<p>You'll be buying <span id="pointsText">0</span> points for <span id="moneyText">0</span>!</p>
@@ -18,6 +18,9 @@
 	<button>Submit</button>
 	
 	<p id="messageSpot">Messages here!</p>
+	
+	<div id="users"></div>
+	<div id="purchases"></div>
 </form>
 
 <script src="continue/script.js"></script>

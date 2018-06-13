@@ -134,6 +134,26 @@ function message(input){
 	}
 }
 
+function users(json){
+	var table='<table>';
+	for(var i=0;i<json.length;i++){
+		table+='<tr><td>'+json[i].user+'</td><td>'+json[i].points+'</td></tr>';
+	}
+	table+='</table>';
+	
+	return table;
+}
+
+function purchases(json){
+	var table='<table>';
+	for(var i=0;i<json.length;i++){
+		table+='<tr><td>'+json[i].user+'</td><td>'+json[i].points+'</td><td>'+json[i].comment+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
+	}
+	table+='</table>';
+	
+	return table;
+}
+
 ///////////////////////////////////////
 ////////////EVENT LISTENERS////////////
 ///////////////////////////////////////
@@ -162,6 +182,12 @@ fetch('continue/ajax.php',{
 			C.ratio=json.ratio;
 			C.currency=json.currency;
 			C.feeCalc=json.feeCalc;
+			C.totalPoints=json.totalPoints;
+			C.users=json.users;
+			C.purchases=json.purchases;
+			
+			document.getElementById('users').innerHTML=users(C.users);
+			document.getElementById('purchases').innerHTML=purchases(C.purchases);
 			
 			var tempSplit=C.ratio.split(':');
 			pointsToMoney=tempSplit[0]/tempSplit[1];
