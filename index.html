@@ -5,17 +5,18 @@
 <body>
 
 <form method="post">
-	<p>Points</p><input id="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
-	<p>Money</p><input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
+	<br>Points: <input id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
+	<br>Money: <input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
 
 	<p>You'll be buying <span id="pointsText">0</span> points for <span id="moneyText">0</span>!</p>
 
-	<input id="cardNumber" name="cardNumber" type="text">
-	<input id="cardExpiration" name="cardExpiration" type="text">
-	<input id="cardCVC" name="cardCVC" type="text">
-	<input id="cardZIP" name="cardZIP" type="text">
-	<input name="call" value="submit" type="hidden">
-	<button>Submit</button>
+	<br>User: <input id="user" name="user" type="text">
+	<br>Card #: <input id="cardNumber" name="cardNumber" type="text">
+	<br>Card Exp: <input id="cardExpiration" name="cardExpiration" type="text">
+	<br>Card CVC: <input id="cardCVC" name="cardCVC" type="text">
+	<br>Card ZIP: <input id="cardZIP" name="cardZIP" type="text">
+	<input name="afterFees" value="0" type="hidden">
+	<br><button>Submit</button>
 	
 	<p id="messageSpot">Messages here!</p>
 	

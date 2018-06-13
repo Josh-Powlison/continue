@@ -45,9 +45,6 @@ $response=[
 ################## CODE ##################
 ##########################################
 
-#Can set to 1 for testing, but set back to 0 before it goes live!
-error_reporting(1);
-
 #Get database
 $db=new PDO(
 	'mysql:host='.$host.';
@@ -99,21 +96,65 @@ if($response['call']==='get'){
 	$response['success']=true;
 #Payment
 }else if($response['call']==='submit'){
-	if(!empty($_POST['cardNumber'])){
-		$response['success']=true;
-		echo 'I got your credit card number!';
-	}
+	#For now, assume purchase is successful
+	$purchaseSuccessful=true;
 	
-	#Get each individual purchase
-	$data=$db->prepare(
-		'INSERT INTO
-			points
-			(points,user,comment)
-			VALUES (?,?,?)'
-	);
-	
-	if($data->execute([$purchased,'','Purchase'])){
+	if($purchaseSuccessful){
+		#Send purchase info
+		$data=$db->prepare(
+			'INSERT INTO
+				points
+				(points,user,comment)
+				VALUES (?,?,?)'
+		);
 		
+		$amount=$_POST['money'];
+		
+		#Deduct fees
+		$deductions=explode('-',$response['feeCalc']);
+		
+		#Math help: http://amby.com/educate/math/4-2_prop.html
+		
+		#Go from left to right
+		for($i=1;$i<count($deductions);$i++){
+			#Deduct percentage
+			if(strpos($deductions[$i],'%')!==false) $amount-=((floatval(str_replace('%','',$deductions[$i])))/100)*$amount;
+			#Deduct amount
+			else $amount-=floatval($deductions[$i]);
+		}
+		
+		$amount=$amount;
+		
+		#Get moneyToPoints ratio
+		$tempSplit=explode(':',$response['ratio']);
+		$moneyToPoints=$tempSplit[1]/$tempSplit[0];
+
+		#Convert money to points
+		$points=0;
+		
+		$points=floor($amount*$moneyToPoints);
+			
+		#Set the money or points to returnVal but no less than 0
+		$points=($points<0) ? 0 : $points;
+		
+		#If the local values line up with these ones, make the purchase!
+		#DO NOT ASSUME LOCAL CALCULATIONS OR VALUES (other than price) PASSED ARE CORRECT EVER!!!!
+		
+		if($_POST['points']!=$points){
+			echo 'Our points calculation was off! Maybe things have changed; try refreshing the webpage and purchasing again! You sent ',$_POST['points'],' but we calculated ',$points;
+		}else if(floor($_POST['moneyAfterFees'])!==floor($amount)){
+			echo 'Our money calculation after fees was off! You sent ',$_POST['moneyAfterFees'],' but we calculated ',$amount;
+		}else if($points===0){
+			echo 'You can\'t purchase 0 points! Try a higher number, like 1.';
+		}else if($data->execute([$points,$_POST['user'],'Purchase'])){
+			$response['success']=true;
+			echo 'You successfully purchased ',$points,' points!';
+		}else{
+			#General failure
+			echo 'We failed to submit your purchase! Email for help.';
+		}
+	}else{
+		echo 'Payment failed: because we don\'t accept payments yet!';
 	}
 }else{
 	echo 'No call type passed!';

@@ -65,6 +65,7 @@ C.update=function(to){
 	}
 }
 
+//Calculate new value after fees
 C.fees=function(amount,add){
 	
 	var deductions=C.feeCalc.split('-');
@@ -101,10 +102,17 @@ C.fees=function(amount,add){
 
 //Submit the information
 C.submit=function(){
+	var formData=new FormData();
+	formData.append('call','submit');
+	formData.append('money',C.money);
+	formData.append('points',C.points);
+	formData.append('user',document.getElementById('user').value);
+	formData.append('moneyAfterFees',C.fees(C.money));
+	
 	//Send payment info
 	fetch('continue/ajax.php',{
 		method:'POST'
-		,body:new FormData(C.form)
+		,body:formData
 	})
 	.then(response=>{return response.json();})
 	//On successful load
