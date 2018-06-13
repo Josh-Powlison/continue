@@ -30,4 +30,8 @@ You can share goals and progress with your audience so they can see where you're
 
 ## Payment providers support
 
-I aim to make it easy to plug in whatever payment provider you want to use! Payment service connections are still in development.
+Put the relevant PHP packages inside of the `payment-providers` folder and then 
+
+* **Stripe**: Just add your API keys and download Stripe from https://stripe.com/docs/libraries#php
+
+Make sure in the relevant `*****-payment.php` file that you `require` the correct file!
