@@ -106,15 +106,22 @@ C.submit=function(){
 	formData.append('call','submit');
 	formData.append('money',C.money);
 	formData.append('points',C.points);
-	formData.append('user',document.getElementById('user').value);
 	formData.append('moneyAfterFees',C.fees(C.money));
 	formData.append('service',document.getElementById('service').value);
 	formData.append('idempotencyKey',C.idempotencyKey);
-	formData.append('email',document.getElementById('email').value);
-	
-	var paymentSuccess=false;
-	
+
 	new Promise(function(resolve,reject){
+		//Check values
+		if(!document.getElementById('email').checkValidity){
+			reject('Your email is invalid!');
+		}
+		formData.append('email',document.getElementById('email').value);
+		
+		if(!document.getElementById('user').checkValidity){
+			reject('Your username is invalid!');
+		}
+		formData.append('user',document.getElementById('user').value);
+		
 		//Stripe
 		if(C.services.stripe){
 			stripe.createToken(card).then(result=>{
