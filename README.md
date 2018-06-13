@@ -8,13 +8,15 @@ That may sound weird, but some simple math will help. The following shows the mo
 
 ```$1 * .029 - .30 = $0.67
 $10 * .029 - .30 = $9.41
-$100 * .029 - .30 = $96.80```
+$100 * .029 - .30 = $96.80
+```
 
 Based on this, let's compare how much you earn after fees for many small purchases vs fewer larger ones:
 
 ```100 $1 purchases: $67.00 earned
 10 $10 purchases: $94.10 earned
-1 $100 purchase: $96.80 earned```
+1 $100 purchase: $96.80 earned
+```
 
 Small purchases are great! But we don't receive the same amount. So we need a different model to receive payments with.
 
