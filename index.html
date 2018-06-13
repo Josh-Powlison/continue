@@ -12,11 +12,15 @@
 	<p>You'll be buying <span id="pointsText">0</span> points for <span id="moneyText">0</span>!</p>
 
 	<br>User: <input id="user" name="user" type="text">
-	<br>Card #: <input id="cardNumber" name="cardNumber" type="text">
+	<br>Email: <input id="email" name="email" type="email">
+	<div id="cardElement"></div>
+	<!--<br>Card #: <input id="cardNumber" name="cardNumber" type="text">
 	<br>Card Exp: <input id="cardExpiration" name="cardExpiration" type="text">
 	<br>Card CVC: <input id="cardCVC" name="cardCVC" type="text">
-	<br>Card ZIP: <input id="cardZIP" name="cardZIP" type="text">
+	<br>Card ZIP: <input id="cardZIP" name="cardZIP" type="text">-->
+	<br>Services: <input id="service" name="service" value="stripe" type="text">
 	<input name="afterFees" value="0" type="hidden">
+	<input name="idempotencyKey" value="" type="hidden">
 	<br><button>Submit</button>
 	
 	<p id="messageSpot">Messages here!</p>

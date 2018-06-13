@@ -108,20 +108,42 @@ C.submit=function(){
 	formData.append('points',C.points);
 	formData.append('user',document.getElementById('user').value);
 	formData.append('moneyAfterFees',C.fees(C.money));
+	formData.append('service',document.getElementById('service').value);
+	formData.append('idempotencyKey',C.idempotencyKey);
+	formData.append('email',document.getElementById('email').value);
 	
-	//Send payment info
-	fetch('continue/ajax.php',{
-		method:'POST'
-		,body:formData
-	})
-	.then(response=>{return response.json();})
-	//On successful load
-	.then(json=>{
-		console.log(json);
-		message(json.message);
-	})
-	.catch(response=>{message(response);})
-	;
+	var paymentSuccess=false;
+	
+	new Promise(function(resolve,reject){
+		//Stripe
+		if(C.services.stripe){
+			stripe.createToken(card).then(result=>{
+				if(result.error){
+					reject(result.error.message);
+					console.log(result);
+				}else{
+					formData.append('stripeToken',result.token.id);
+					resolve();
+				}
+			});
+		}
+	}).then(()=>{
+		//Send payment info
+		fetch('continue/ajax.php',{
+			method:'POST'
+			,body:formData
+		})
+		.then(response=>{return response.json();})
+		.then(json=>{
+			console.log(json);
+			message(json.message);
+			C.idempotencyKey=json.idempotencyKey;
+		})
+		.catch(response=>{message(response);})
+		;
+	}).catch(input=>{
+		message(input);
+	});
 }
 
 ///////////////////////////////////////
@@ -191,6 +213,9 @@ function purchases(json){
 /////////////////START/////////////////
 ///////////////////////////////////////
 
+var stripe;
+var card;
+
 //Get info on payment setup from ajax.php; we'll also submit payment TO ajax.php. This way, we don't have to adjust data in two places; we can trust the data will be the same when we start up the form, and when we submit.
 var formData=new FormData();
 formData.append('call','get');
@@ -213,11 +238,30 @@ fetch('continue/ajax.php',{
 			C.users=json.users;
 			C.purchases=json.purchases;
 			C.goals=json.goals;
+			C.services=json.services;
+			C.idempotencyKey=json.idempotencyKey;
 			
 			document.getElementById('users').innerHTML=users(C.users);
 			document.getElementById('purchases').innerHTML=purchases(C.purchases);
 			if(C.goals) document.getElementById('goals').innerHTML=goals(C.goals);
 			document.getElementById('totalPoints').innerHTML=C.totalPoints;
+			
+			//Run through services
+			if(C.services.stripe){
+				//Load and set up Stripe
+				var script=document.createElement('script');
+				script.src='https://js.stripe.com/v3/';
+				C.form.appendChild(script);
+				
+				script.addEventListener('load',function(){
+					stripe=Stripe(C.services.stripe);
+					
+					var elements=stripe.elements();
+					
+					card=elements.create('card');
+					card.mount(document.getElementById('cardElement'));
+				});
+			}
 			
 			var tempSplit=C.ratio.split(':');
 			pointsToMoney=tempSplit[0]/tempSplit[1];
