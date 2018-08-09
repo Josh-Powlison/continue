@@ -4,8 +4,9 @@
 	margin:auto;
 	width:20rem;
 	max-width:100%;
-	border:1px solid black;
 	box-sizing:border-box;
+	background-color:#fff6ee;
+	font-family:sans-serif;
 }
 
 .continue-total{
@@ -24,7 +25,90 @@
 }
 
 .continue-purchase>input{
-	width:20%;
+	width:35%;
+	margin:0 1%;
+}
+
+.continue-form input{
+	font-size:1.25em;
+	border:.1em solid #cec5c1;
+	box-shadow:none;
+	padding:.15em;
+}
+
+.continue-inline-svg{
+	height:1em;
+}
+
+.continue-points-info{
+	background:linear-gradient(to right,#fdd3b1 75%,#cec5c1 0%);
+	position:relative;
+	padding:.2em;
+}
+
+.continue-points-current{
+	font-size:2.5em;
+	display:inline;
+	margin:0;
+	padding-left:.1em;
+	display:flex;
+    align-items:center;
+}
+
+.continue-points-goal{
+	font-size:1em;
+	display:inline;
+	position:absolute;
+	bottom:0;
+	right:0;
+	margin:0;
+	padding:.1em;
+}
+
+.continue-goals{
+	background-color:#fff;
+}
+
+.continue-goals-previous,
+.continue-goals-next{
+	background-color:#fb7f15;
+	border:none;
+	cursor:pointer;
+	height:100%;
+	border-radius:50%;
+	margin:.25em;
+	height:1em;
+}
+
+.continue-goals-previous{
+	float:left;
+}
+
+.continue-goals-current{
+	display:inline-block;
+	margin:0;
+	padding:.25em;
+}
+
+.continue-goals-next{
+	float:right;
+}
+
+input.continue-money{
+	border-color:#00ba0e;
+	text-align:right;
+	background:url("money-icon.svg") #fff;
+	background-position:7% 50%;
+	background-size:1em;
+	background-repeat:no-repeat;
+}
+
+input.continue-points{
+	border-color:#fb7f15;
+	background:url("icon.svg") #fff;
+	background-position:93% 50%;
+	background-size:1em;
+	background-repeat:no-repeat;
 }
 
 .continue-card{
@@ -34,7 +118,7 @@
 }
 
 .continue-input-default{
-	margin:auto;
+	margin:.2em auto;
 	display:block;
 }
 
@@ -45,6 +129,13 @@
 .continue-submit{
 	width:100%;
 	display:block;
+	background-color:#fb7f15;
+	color:#fff;
+	font-size:1.25em;
+	font-weight:bold;
+	box-shadow:none;
+	border:none;
+	padding:.5em;
 }
 
 /* Tables */

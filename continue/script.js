@@ -1,9 +1,5 @@
-function Continue(input){
-
 'use strict';
-
-//If an input object doesn't exist, make one
-if(!input) input={};
+function Continue(input={}){
 
 ///////////////////////////////////////
 ///////////PUBLIC VARIABLES////////////

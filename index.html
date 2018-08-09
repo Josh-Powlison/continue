@@ -9,13 +9,25 @@
 
 <h1>Continue</h1>
 
-<form method="post" class="continue-form">
-	<p class="continue-total" id="totalPoints">0</p>
+<form class="continue-form">
+	<div class="continue-points-info">
+		<p class="continue-points-current"><img class="continue-inline-svg" src="continue/icon.svg"><span id="totalPoints">0</span></p>
+		<p class="continue-points-goal">/1M</p>
+	</div>
+	<div class="continue-goals" id="totalPoints">
+		<button class="continue-goals-previous"></button>
+		<p class="continue-goals-current">1M: Fan video for the fans</p>
+		<button class="continue-goals-next"></button>
+	</div>
 	<div class="continue-purchase">
-		$<input id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
-		<input id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">P
+		<input class="continue-money" id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
+		<input class="continue-points" id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
 	</div>
 
+	<select>
+		<option>Stripe</option>
+		<option>PayPal</option>
+	</select>
 	<div id="cardElement" class="continue-card"></div>
 	
 	<input class="continue-input-default" id="user" name="user" type="text" placeholder="Your Name">
