@@ -267,7 +267,7 @@ if($goals){
 			,date_met AS dateMet
 		FROM goals
 		ORDER BY
-			date_met DESC
+			-date_met DESC
 			,points ASC'
 	);
 	
