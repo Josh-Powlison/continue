@@ -38,6 +38,7 @@
 
 .continue-inline-svg{
 	height:1em;
+	vertical-align:text-top;
 }
 
 .continue-points-info{
@@ -71,13 +72,10 @@
 
 .continue-goals-previous,
 .continue-goals-next{
-	background-color:#fb7f15;
+	background:none;
 	border:none;
 	cursor:pointer;
-	height:100%;
-	border-radius:50%;
 	margin:.25em;
-	height:1em;
 }
 
 .continue-goals-previous{
@@ -90,8 +88,24 @@
 	padding:.25em;
 }
 
+.continue-goals-current{
+	margin:0;
+	padding:.25em;
+}
+
 .continue-goals-next{
 	float:right;
+	transform:scale(-1,1);
+}
+
+.continue-current-goal-have{
+	background-color:#fdd3b1;
+}
+
+.continue-goals-button-inactive{
+	visibility:hidden;
+	background-color:#cec5c1;
+	pointer-events:none;
 }
 
 input.continue-money{
@@ -141,15 +155,12 @@ input.continue-points{
 /* Tables */
 
 .continue-users table
-,.continue-purchases table
-,.continue-goals table{
+,.continue-purchases table{
 	margin:1em auto;
 }
 
 .continue-users td
-,.continue-purchases td
-,.continue-goals td{
-	
+,.continue-purchases td{
 	padding:.25em;
 }
 
@@ -159,10 +170,6 @@ input.continue-points{
 
 .continue-purchases td{
 	background-color:#ffd3f3;
-}
-
-.continue-goals td{
-	background-color:#d3edff;
 }
 
 .continue-goal-met td{

@@ -164,6 +164,7 @@ C.submit=function(){
 
 var pointsToMoney;
 var moneyToPoints;
+var currentGoal=0;
 
 ///////////////////////////////////////
 ///////////PRIVATE FUNCTIONS///////////
@@ -215,6 +216,8 @@ function purchases(json){
 	return table;
 }
 
+C.currentGoalEl=document.querySelector('.continue-goals-current');
+
 function updateValues(json){
 	C.totalPoints=json.totalPoints;
 	C.users=json.users;
@@ -224,15 +227,68 @@ function updateValues(json){
 	
 	C.usersEls.innerHTML=users(C.users);
 	C.purchasesEls.innerHTML=purchases(C.purchases);
-	if(C.goals) C.goalsEls.innerHTML=goals(C.goals);
 	C.totalPointsEls.innerHTML=C.totalPoints;
+	
+	console.log(C.goals);
+	
+	//Get the current goal
+	for(var i=0;i<C.goals.length;i++){
+		//Skip this item if we have enough points and it's not last in the list
+		if(C.totalPoints>C.goals[i].points && i!==C.goals.length-1) continue;
+		
+		document.querySelector('.continue-points-goal').innerHTML='/'+C.goals[i].points;
+		
+		updateGoal(i);
+		break;
+	}
+}
+
+var goalsEl=document.querySelector('.continue-goals');
+var goalsPrevious=document.querySelector('.continue-goals-previous')
+var goalsNext=document.querySelector('.continue-goals-next')
+
+//Update current goal text
+function updateGoal(number=0){
+	//Keep with the limits
+	if(number<0) number=0;
+	if(number>=C.goals.length) number=C.goals.length-1;
+	
+	currentGoal=number;
+	
+	//Toggle back arrow
+	if(number===0) goalsPrevious.classList.add('continue-goals-button-inactive');
+	else goalsPrevious.classList.remove('continue-goals-button-inactive');
+	
+	//Toggle right arrow
+	if(number===C.goals.length-1) goalsNext.classList.add('continue-goals-button-inactive');
+	else goalsNext.classList.remove('continue-goals-button-inactive');
+	
+	//If we have this goal
+	if(C.totalPoints>=C.goals[number].points){
+		goalsEl.classList.add('continue-current-goal-have');
+		
+		C.currentGoalEl.innerHTML='<strong title="'+C.goals[number].dateMet+'">'+new Intl.DateTimeFormat().format(C.goals[number].timestamp)+'</strong> '+C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';;
+	//If we don't have this goal
+	}else{
+		goalsEl.classList.remove('continue-current-goal-have');
+		
+		C.currentGoalEl.innerHTML=C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';
+	}
 }
 
 ///////////////////////////////////////
 ////////////EVENT LISTENERS////////////
 ///////////////////////////////////////
 
+document.querySelector('.continue-goals-previous').addEventListener('click',function(event){
+	event.preventDefault();
+	updateGoal(currentGoal-1);
+});
 
+document.querySelector('.continue-goals-next').addEventListener('click',function(event){
+	event.preventDefault();
+	updateGoal(currentGoal+1);
+});
 
 ///////////////////////////////////////
 /////////////////START/////////////////

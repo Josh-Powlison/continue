@@ -14,10 +14,10 @@
 		<p class="continue-points-current"><img class="continue-inline-svg" src="continue/icon.svg"><span id="totalPoints">0</span></p>
 		<p class="continue-points-goal">/1M</p>
 	</div>
-	<div class="continue-goals" id="totalPoints">
-		<button class="continue-goals-previous"></button>
+	<div class="continue-goals">
+		<p class="continue-goals-previous"><img class="continue-inline-svg" src="continue/arrow.svg"></p>
 		<p class="continue-goals-current">1M: Fan video for the fans</p>
-		<button class="continue-goals-next"></button>
+		<p class="continue-goals-next"><img class="continue-inline-svg" src="continue/arrow.svg"></p>
 	</div>
 	<div class="continue-purchase">
 		<input class="continue-money" id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
@@ -43,8 +43,6 @@
 </form>
 
 
-<h2>Goals</h2>
-<div id="goals" class="continue-goals"></div>
 <h2>Credits</h2>
 <div id="users" class="continue-users"></div>
 <h2>Purchases</h2>
@@ -67,7 +65,6 @@ var test=new Continue({
 	,paymentInfoEl:document.getElementById('cardElement')
 	,usersEls:document.getElementById('users')
 	,purchasesEls:document.getElementById('purchases')
-	,goalsEls:document.getElementById('goals')
 	,userEl:document.getElementById('user')
 	,emailEl:document.getElementById('email')
 	,serviceEl:document.getElementById('service')
