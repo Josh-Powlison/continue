@@ -237,6 +237,7 @@ function updateValues(json){
 		if(C.totalPoints>C.goals[i].points && i!==C.goals.length-1) continue;
 		
 		document.querySelector('.continue-points-goal').innerHTML='/'+C.goals[i].points;
+		document.querySelector('.continue-points-goal').dataset.goal=i;
 		
 		updateGoal(i);
 		break;
@@ -263,17 +264,25 @@ function updateGoal(number=0){
 	if(number===C.goals.length-1) goalsNext.classList.add('continue-goals-button-inactive');
 	else goalsNext.classList.remove('continue-goals-button-inactive');
 	
+	var goalText='';
+	
 	//If we have this goal
 	if(C.totalPoints>=C.goals[number].points){
 		goalsEl.classList.add('continue-current-goal-have');
 		
-		C.currentGoalEl.innerHTML='<strong title="'+C.goals[number].dateMet+'">'+new Intl.DateTimeFormat().format(C.goals[number].timestamp)+'</strong> '+C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';;
+		goalText+='<strong title="'+C.goals[number].dateMet+'">'+new Intl.DateTimeFormat().format(C.goals[number].timestamp)+'</strong> ';
 	//If we don't have this goal
 	}else{
 		goalsEl.classList.remove('continue-current-goal-have');
 		
-		C.currentGoalEl.innerHTML=C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';
+		//If this is the next goal, let the user know
+		if(number===0) goalText+='<strong>Next</strong> ';
+		else if(C.totalPoints>=C.goals[number-1].points) goalText+='<strong>Next</strong> ';
 	}
+	
+	goalText+=C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';
+	
+	C.currentGoalEl.innerHTML=goalText;
 }
 
 ///////////////////////////////////////
@@ -288,6 +297,10 @@ document.querySelector('.continue-goals-previous').addEventListener('click',func
 document.querySelector('.continue-goals-next').addEventListener('click',function(event){
 	event.preventDefault();
 	updateGoal(currentGoal+1);
+});
+
+document.querySelector('.continue-points-goal').addEventListener('click',function(event){
+	updateGoal(parseInt(event.target.dataset.goal));
 });
 
 ///////////////////////////////////////
