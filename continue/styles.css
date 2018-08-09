@@ -42,7 +42,7 @@
 }
 
 .continue-points-info{
-	background:linear-gradient(to right,#fdd3b1 75%,#cec5c1 0%);
+	background:#cec5c1;
 	position:relative;
 	padding:.2em;
 }

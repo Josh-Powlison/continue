@@ -239,6 +239,9 @@ function updateValues(json){
 		document.querySelector('.continue-points-goal').innerHTML='/'+C.goals[i].points;
 		document.querySelector('.continue-points-goal').dataset.goal=i;
 		
+		//Set background bar to show amount to next
+		document.querySelector('.continue-points-info').style.background='linear-gradient(to right,#fdd3b1 '+Math.min((C.totalPoints/C.goals[i].points)*100,100)+'%,#cec5c1 0%)';
+		
 		updateGoal(i);
 		break;
 	}
