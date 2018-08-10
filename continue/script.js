@@ -178,13 +178,31 @@ function message(input){
 }
 
 function users(json){
-	var table='<table>';
-	for(var i=0;i<json.length;i++){
-		table+='<tr><td>'+json[i].user+'</td><td>'+json[i].points+'</td></tr>';
-	}
-	table+='</table>';
+	var html='';
 	
-	return table;
+	//Early items are displayed simply
+	for(var i=0;i<4;i++){
+		//Don't go past JSON length
+		if(i>=json.length) break;
+		
+		html+='<p class="continue-user-credit" style="font-size:'+Math.max(1.5-(i/5),.75)+'em">'+json[i].user+' <img class="continue-inline-svg" src="continue/icon.svg"> '+json[i].points+'</p>';
+	}
+	
+	//Show remaining items
+	if(json.length>=4){
+		html+='<p class="continue-user-credit" style="font-size:.75em">';
+		
+		for(var i=4;i<json.length;i++){
+			html+=json[i].user+' <img class="continue-inline-svg" src="continue/icon.svg"> '+json[i].points;
+			
+			if(i!==json.length-1){
+				html+=', ';
+			}
+		}
+		html+='</p>';
+	}
+	
+	return html;
 }
 
 C.currentGoalEl=document.querySelector('.continue-goals-current');
