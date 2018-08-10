@@ -135,6 +135,8 @@ input.continue-points{
 	margin:.5em 0em;
 	padding:1em 0em;
 	border:.2rem solid #cec5c1;
+	border-left:none;
+	border-right:none;
 	box-sizing:border-box;
 }
 
