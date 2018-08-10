@@ -7,8 +7,6 @@
 </head>
 <body>
 
-<h1>Continue</h1>
-
 <form class="continue-form">
 	<div class="continue-points-info">
 		<p class="continue-points-current"><img class="continue-inline-svg" src="continue/icon.svg"><span id="totalPoints">0</span></p>
@@ -24,11 +22,10 @@
 		<input class="continue-points" id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
 	</div>
 
-	<select>
-		<option>Stripe</option>
-		<option>PayPal</option>
-	</select>
-	<div id="cardElement" class="continue-card"></div>
+	<div class="continue-payment-methods">
+		<img class="continue-payment-logo" src="continue/images/stripe.svg">
+		<div id="cardElement" class="continue-card"></div>
+	</div>
 	
 	<input class="continue-input-default" id="user" name="user" type="text" placeholder="Your Name">
 	<input class="continue-input-default" id="email" name="email" type="email" placeholder="address@email.com">
@@ -45,8 +42,6 @@
 
 <h2>Credits</h2>
 <div id="users" class="continue-users"></div>
-<h2>Purchases</h2>
-<div id="purchases" class="continue-purchases"></div>
 
 <script src="continue/script.js"></script>
 <script>
@@ -64,7 +59,6 @@ var test=new Continue({
 	,totalPointsEls:document.getElementById('totalPoints')
 	,paymentInfoEl:document.getElementById('cardElement')
 	,usersEls:document.getElementById('users')
-	,purchasesEls:document.getElementById('purchases')
 	,userEl:document.getElementById('user')
 	,emailEl:document.getElementById('email')
 	,serviceEl:document.getElementById('service')

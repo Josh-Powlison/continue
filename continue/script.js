@@ -187,35 +187,6 @@ function users(json){
 	return table;
 }
 
-function goals(json){
-	var table='<table>';
-	
-	var nextGoal=null;
-	
-	for(var i=0;i<json.length;i++){
-		if(json[i].dateMet===null){
-			nextGoal=i;
-			table+='<tr><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>Ongoing!</td></tr>';
-			continue;
-		}
-		
-		table+='<tr class="continue-goal-met"><td>'+json[i].reward+'</td><td>'+json[i].points+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
-	}
-	table+='</table>';
-	
-	return table;
-}
-
-function purchases(json){
-	var table='<table>';
-	for(var i=0;i<json.length;i++){
-		table+='<tr><td>'+json[i].user+'</td><td>'+json[i].points+'</td><td>'+json[i].comment+'</td><td>'+new Intl.DateTimeFormat().format(json[i].timestamp)+'</td></tr>';
-	}
-	table+='</table>';
-	
-	return table;
-}
-
 C.currentGoalEl=document.querySelector('.continue-goals-current');
 
 function updateValues(json){
@@ -226,7 +197,6 @@ function updateValues(json){
 	C.idempotencyKey=json.idempotencyKey;
 	
 	C.usersEls.innerHTML=users(C.users);
-	C.purchasesEls.innerHTML=purchases(C.purchases);
 	C.totalPointsEls.innerHTML=C.totalPoints;
 	
 	console.log(C.goals);
@@ -283,7 +253,7 @@ function updateGoal(number=0){
 		else if(C.totalPoints>=C.goals[number-1].points) goalText+='<strong>Next</strong> ';
 	}
 	
-	goalText+=C.goals[number].reward+': '+C.goals[number].points+' <img class="continue-inline-svg" src="continue/icon.svg">';
+	goalText+=C.goals[number].reward+' <img class="continue-inline-svg" src="continue/icon.svg"> '+C.goals[number].points;
 	
 	C.currentGoalEl.innerHTML=goalText;
 }

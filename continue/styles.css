@@ -31,7 +31,7 @@
 
 .continue-form input{
 	font-size:1.25em;
-	border:.1em solid #cec5c1;
+	border:.2rem solid #cec5c1;
 	box-shadow:none;
 	padding:.15em;
 }
@@ -109,21 +109,39 @@
 	pointer-events:none;
 }
 
-input.continue-money{
-	border-color:#00ba0e;
+input.continue-money,
+input.continue-points{
 	text-align:right;
-	background:url("money-icon.svg") #fff;
-	background-position:7% 50%;
+	background-position:5% 50%;
 	background-size:1em;
 	background-repeat:no-repeat;
+	background-color:#fff;
+}
+
+input.continue-money{
+	border-color:#00ba0e;
+	background-image:url("money-icon.svg");
 }
 
 input.continue-points{
 	border-color:#fb7f15;
-	background:url("icon.svg") #fff;
-	background-position:93% 50%;
-	background-size:1em;
-	background-repeat:no-repeat;
+	background-image:url("icon.svg");
+}
+
+.continue-payment-methods{
+	background-color:#fff;
+	width:100%;
+	min-height:3em;
+	margin:.5em 0em;
+	padding:1em 0em;
+	border:.2rem solid #cec5c1;
+	box-sizing:border-box;
+}
+
+.continue-payment-logo{
+	display:block;
+	height:3em;
+	margin:auto;
 }
 
 .continue-card{
