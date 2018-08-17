@@ -73,10 +73,12 @@
 
 .continue-goals-previous,
 .continue-goals-next{
-	background:none;
+	background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40' version='1'%3E%3Cpath d='M20 0v40L0 20z' fill='%23fb7f15'/%3E%3C/svg%3E");
 	border:none;
 	cursor:pointer;
 	margin:.25em;
+	height:1em;
+	width:.5em;
 }
 
 .continue-goals-previous{
@@ -120,12 +122,12 @@ input.continue-points{
 
 input.continue-money{
 	border-color:#00ba0e;
-	background-image:url("money-icon.svg");
+	background-image:url("money.svg");
 }
 
 input.continue-points{
 	border-color:#fb7f15;
-	background-image:url("icon.svg");
+	background-image:url("logo.svg");
 }
 
 .continue-payment-methods{

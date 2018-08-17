@@ -185,7 +185,7 @@ function users(json){
 		//Don't go past JSON length
 		if(i>=json.length) break;
 		
-		html+='<p class="continue-user-credit" style="font-size:'+Math.max(1.5-(i/5),.75)+'em">'+json[i].user+' <img class="continue-inline-svg" src="continue/icon.svg"> '+json[i].points+'</p>';
+		html+='<p class="continue-user-credit" style="font-size:'+Math.max(1.5-(i/5),.75)+'em">'+json[i].user+' <img class="continue-inline-svg" src="continue/logo.svg"> '+json[i].points+'</p>';
 	}
 	
 	//Show remaining items
@@ -193,7 +193,7 @@ function users(json){
 		html+='<p class="continue-user-credit" style="font-size:.75em">';
 		
 		for(var i=4;i<json.length;i++){
-			html+=json[i].user+' <img class="continue-inline-svg" src="continue/icon.svg"> '+json[i].points;
+			html+=json[i].user+' <img class="continue-inline-svg" src="continue/logo.svg"> '+json[i].points;
 			
 			if(i!==json.length-1){
 				html+=', ';
@@ -271,7 +271,7 @@ function updateGoal(number=0){
 		else if(C.totalPoints>=C.goals[number-1].points) goalText+='<strong>Next</strong> ';
 	}
 	
-	goalText+=C.goals[number].reward+' <img class="continue-inline-svg" src="continue/icon.svg"> '+C.goals[number].points;
+	goalText+=C.goals[number].reward+' <img class="continue-inline-svg" src="continue/logo.svg"> '+C.goals[number].points;
 	
 	C.currentGoalEl.innerHTML=goalText;
 }
