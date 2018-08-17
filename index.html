@@ -94,18 +94,22 @@ var test=new Continue({
 
 <h2>Install in 15 minutes!</h2>
 
-<p>1. <a href="https://github.com/joshpowlison/continue/releases" target="_blank">Download</a> and put the <em>continue</em> folder on your website!</p>
+<p>1. <a href="https://github.com/joshpowlison/continue/releases" target="_blank">Download</a> and put the <em>continue</em> folder on your website.</p>
 
-<p>2. Get a <a href="https://stripe.com/">Stripe</a> account and put the relevant keys in the <em>ajax.php</em> file (I recommend using the testing keys first and making sure it works for you).</p>
+<p>2. Get your payment solution set up (account created, etc), and follow the instructions in the relevant <em>payment-providers/[provider]-payment.php</em> file.</p>
 
-<p>3. Use this HTML:</p>
+<p>3. Import <em>points.sql</em> and <em>goals.sql</em> into a MySQL database.</p>
+
+<p>4. Adjust settings in <em>ajax.php</em> to suit your needs (if available, use testing keys until you've tested it thoroughly!).</p>
+
+<p>5. Use this HTML:</p>
 
 <pre>
 &lt;script src="continue/script.js"&gt;&lt;/script&gt;
 &lt;script&gt;new Continue;&lt;/script&gt;
 </pre>
 
-<p>To customize your Continue, look at the code below!</p>
+<p>To customize your Continue, look at the code below! Most of the settings are in the PHP file.</p>
 
 <pre>
 &lt;script&gt;

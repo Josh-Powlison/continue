@@ -16,7 +16,7 @@ ob_start();
 
 ### MySQL Info ###
 $host='localhost';					#Can probably stick with this
-$database='database';				#The database your podcast's table is in
+$database='database';				#The database your points and goals tables are in
 $username='user';					#The MySQL user name (not your hosting account name)
 $password='password';				#The MySQL user password
 

@@ -7,6 +7,9 @@
 #Get init.php from the folder you got, or use Composer! Get packages at https://stripe.com/docs/libraries#php
 require 'stripe-php-6.8.0/init.php';
 
+#Also, you can get the logo from this webpage: https://stripe.com/about/resources
+#I recommend blue on clear. Put it into this folder!
+
 \Stripe\Stripe::setApiKey($services['stripe']['secretKey']);
 
 #idempotencyKey makes sure the same charge isn't being sent through twice
