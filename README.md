@@ -1,4 +1,6 @@
-# continue
+<img src="design-files/logo.svg" width="100"><br>[Check out demos on the website!](https://continue.heybard.com/)<br>[Download the latest version](https://github.com/joshpowlison/continue/releases)
+
+# What is Continue?
 
 Convert money into points for your projects! Set and meet goals and let your audience know where you're at. It's like Kickstarter for your website!
 
@@ -35,3 +37,7 @@ Put the relevant PHP packages inside of the `payment-providers` folder and then
 * **Stripe**: Add your API keys to `ajax.php` and download Stripe from https://stripe.com/docs/libraries#php
 
 Make sure in the relevant `*****-payment.php` file that you `require` the correct file!
+
+## Thank you for supporting the open source community, BrowserStack!
+
+[<img src="images/browserstack.svg" width="200">](https://www.browserstack.com/)
