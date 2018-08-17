@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2018 at 04:48 PM
+-- Generation Time: Aug 17, 2018 at 10:16 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -38,16 +38,6 @@ CREATE TABLE `points` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `points`
---
-
-INSERT INTO `points` (`id`, `points`, `user`, `date`, `comment`, `purchase_info`) VALUES
-(1, 15, 'Bob', '2018-06-03 14:17:36', 'For being awesome', NULL),
-(2, 27, 'Mary', '2018-06-13 09:17:36', 'Purchase', 'PayPal: 12345'),
-(3, 71, 'Jeff', '2018-06-07 14:21:20', 'Purchase', 'Stripe: 12345'),
-(4, 22, 'Bob', '2018-06-13 07:17:36', 'Shared posts on Twitter', NULL);
-
---
 -- Indexes for dumped tables
 --
 
@@ -65,7 +55,7 @@ ALTER TABLE `points`
 -- AUTO_INCREMENT for table `points`
 --
 ALTER TABLE `points`
-  MODIFY `id` int(7) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(7) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

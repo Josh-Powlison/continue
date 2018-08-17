@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2018 at 06:56 PM
+-- Generation Time: Aug 17, 2018 at 10:15 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -37,15 +37,6 @@ CREATE TABLE `goals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `goals`
---
-
-INSERT INTO `goals` (`id`, `points`, `reward`, `date_set`, `date_met`) VALUES
-(1, 300, 'Dance, baby!', '2018-06-01 00:00:00', NULL),
-(2, 500, 'Victory Pose', '2018-06-06 00:00:00', NULL),
-(3, 1000, 'Stretch Goal #374', '2018-06-12 00:00:00', NULL);
-
---
 -- Indexes for dumped tables
 --
 
@@ -63,7 +54,7 @@ ALTER TABLE `goals`
 -- AUTO_INCREMENT for table `goals`
 --
 ALTER TABLE `goals`
-  MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
