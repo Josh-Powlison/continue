@@ -93,7 +93,7 @@ if($response['call']==='get'){
 }else if($response['call']==='submit'){
 	$purchaseSuccessful=false;
 
-	$amount=$_POST['money'];
+	$amount=$_POST['money'] ?? 0;
 	
 	#Deduct fees
 	$deductions=explode('-',$response['feeCalc']);

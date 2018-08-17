@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="-93.485964"
-     inkscape:cy="382.68415"
+     inkscape:cx="-59.20025"
+     inkscape:cy="284.11272"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -66,7 +66,7 @@
        style="opacity:1;fill:#fff6ee;fill-opacity:1;stroke:none;stroke-width:0.78000003;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:261.92126465;stroke-opacity:1"
        id="rect4485"
        width="118.68452"
-       height="197.68155"
+       height="192.38988"
        x="-86.633926"
        y="66.938942" />
     <rect
@@ -686,5 +686,38 @@
        id="rect5102-3-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.25217962px;line-height:1.25;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-81.410805"
+       y="196.94743"
+       id="text7214"><tspan
+         sodipodi:role="line"
+         id="tspan7212"
+         x="-81.410805"
+         y="196.94743"
+         style="text-align:start;text-anchor:start;stroke-width:0.26458332">Josh Powlison 500</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.25217962px;line-height:1.25;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-81.972656"
+       y="205.76714"
+       id="text7214-1"><tspan
+         sodipodi:role="line"
+         id="tspan7212-3"
+         x="-81.972656"
+         y="205.76714"
+         style="text-align:start;text-anchor:start;stroke-width:0.26458332">Timmy 321</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.25217962px;line-height:1.25;font-family:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-81.169159"
+       y="214.81412"
+       id="text7214-1-2"><tspan
+         sodipodi:role="line"
+         id="tspan7212-3-2"
+         x="-81.169159"
+         y="214.81412"
+         style="text-align:start;text-anchor:start;stroke-width:0.26458332">Jeff 321</tspan></text>
   </g>
 </svg>

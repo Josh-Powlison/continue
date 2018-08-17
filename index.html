@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Continue Demo</title>
+	<meta name="description" content="Quickly install a way to receive payments and reward your following!">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<link rel="stylesheet" href="styles.css">
-	<!--Continue-specific styles-->
-	<link rel="stylesheet" href="continue/styles.css">
+	
+	<!--Favicons-->
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+	<link rel="manifest" href="/favicons/manifest.json">
+	<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="/favicons/favicon.ico">
+	<meta name="msapplication-config" content="/favicons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
 </head>
 <body>
+<header>
+	<nav>
+		<span><img class="svg-inline" src="design-files/logo.svg"></span>
+		<a href="https://github.com/joshpowlison/continue"><p>Github</p></a>
+		<a href="https://github.com/joshpowlison/continue/tree/develop"><p>Dev Branch</p></a>
+	</nav>
+</header>
+<main>
+
+<script src="continue/script.js"></script>
+<link rel="stylesheet" href="continue/styles.css">
+
+<h1><img class="svg-inline" src="design-files/logo.svg"> Continue</h1>
+
+<p id="intro">Quickly receive payments and reward your following!</p>
+
+<p>You can test the following form with the card number "4242 4242 4242 4242" and any future expiration date (I don't recommend putting your actual card number in here, you might still get charged).</p>
 
 <form class="continue-form">
 	<div class="continue-points-info">
 		<p class="continue-points-current"><img class="continue-inline-svg" src="continue/icon.svg"><span id="totalPoints">0</span></p>
-		<p class="continue-points-goal">/1M</p>
+		<p class="continue-points-goal">/0</p>
 	</div>
 	<div class="continue-goals">
 		<p class="continue-goals-previous"><img class="continue-inline-svg" src="continue/arrow.svg"></p>
-		<p class="continue-goals-current">1M: Fan video for the fans</p>
+		<p class="continue-goals-current">No goals</p>
 		<p class="continue-goals-next"><img class="continue-inline-svg" src="continue/arrow.svg"></p>
 	</div>
 	<div class="continue-purchase">
@@ -62,5 +92,37 @@ var test=new Continue({
 });
 </script>
 
+<h2>Install in 15 minutes!</h2>
+
+<p>1. <a href="https://github.com/joshpowlison/continue/releases" target="_blank">Download</a> and put the <em>continue</em> folder on your website!</p>
+
+<p>2. Get a <a href="https://stripe.com/">Stripe</a> account and put the relevant keys in the <em>ajax.php</em> file (I recommend using the testing keys first and making sure it works for you).</p>
+
+<p>3. Use this HTML:</p>
+
+<pre>
+&lt;script src="continue/script.js"&gt;&lt;/script&gt;
+&lt;script&gt;new Continue;&lt;/script&gt;
+</pre>
+
+<p>To customize your Continue, look at the code below!</p>
+
+<pre>
+&lt;script&gt;
+new Continue({
+<span id="code"></span>
+});
+&lt;/script&gt;
+
+<p id="propertyExplanation"></p></pre>
+
+<!--<h2>Used by:</h3>
+<div id="websites-using"><a href="http://gameplanmanga.com" target="_blank"><img src="images/gameplan-banner.jpg"></a></div>
+<p><small>Email me at <a href="mailto:joshuapowlison@gmail.com" target="_blank">joshuapowlison@gmail.com</a> if you want to be included in the list! I will not include NSFW stories.</small></p>-->
+
+<script src="script.js"></script>
+
+</main>
+<footer><p>Continue is Open Source under an MIT License. Version in Demo: DEV BRANCH</p></footer>
 </body>
 </html>

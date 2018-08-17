@@ -1,7 +1,217 @@
-h1{
+/* COLORS
+Orange:		#fb7f15
+Blackish:	#161d25
+*/
+
+/* Overall */
+
+body{
+	margin:0;
+	padding:0;
+	font-family:Arial;
+	color:#161d25;
+}
+
+/*Header*/
+header{
+	width:100%;
+	font-size:1.5em;
+	background-color:#fb7f15;
+	color:white;
+	font-weight:bold;
+	position:fixed;
+	z-index:100;
+	top:0;
+	box-sizing:border-box;
+	height:4rem;
+}
+
+nav{
+	margin:auto;
+	display:flex;
+	overflow:auto;
+}
+
+nav a
+,nav span{
+	background-color:#fb7f15;
+	color:#fff;
+	height:4rem;
+	padding:0 1rem;
+	text-decoration:none;
+	transition:background-color .1s,color .1s;
+	display:flex;
+	align-items:center;
 	text-align:center;
 }
 
-h2{
+nav img{
+	height:1em;
+}
+
+nav a:hover
+,nav a:active
+,.show-selected
+,.current{
+	background-color:#fff;
+	color:#fb7f15;
+}
+
+#nav-signature{
+	transition:filter .1s;
+}
+
+nav a:hover #nav-signature
+,nav a:active #nav-signature
+,.current #nav-signature{
+	transition:filter .1s;
+	filter:invert(0);
+}
+
+nav p{
+	display:inline-block;
+	margin:0;
+	white-space:nowrap;
+}
+
+/*Center the header*/
+nav *:first-child{
+	margin-left:auto;
+}
+
+nav *:last-child{
+	margin-right:auto;
+}
+
+/*Social media and contact buttons*/
+.connect{
+	padding:0 .2em;
+}
+
+/*Some extra spacing after the last social media icon*/
+/*.connect:last-child{
+	margin-right:1rem;
+}*/
+
+/*Have inline svgs be the height of the area*/
+.svg-inline{
+	height:1em;
+}
+
+/* MAIN */
+
+main{
+	width:50rem;
+	max-width:100%;
+	margin:auto;
+	margin-top:4em;
+	padding:2rem;
+	box-sizing:border-box;
+}
+
+h1{
 	text-align:center;
+	font-size:3rem;
+	margin:0;
+}
+
+pre{
+	background-color:rgba(0,255,0,.1);
+	padding:1em;
+	border-radius:10px;
+	white-space:pre-wrap;
+	font-family:monospace;
+	word-break:break-word;
+}
+
+pre h3{
+	margin:0;
+}
+
+#logo{
+	margin:auto;
+	display:block;
+	width:15rem;
+	max-width:100%;
+}
+
+/*Don't start custom classes with .showpony, because that's how all of the classes are named in showpony.css*/
+
+#intro{
+	font-size:1.5rem;
+	text-align:center;
+}
+
+#example-list{
+	font-size:1.5rem;
+	border:none;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+#example-list:hover{
+	background-color:#eee;
+}
+
+#example-list>option{
+	background-color:#fff;
+}
+
+.obj-name{
+	transition:background-color .1s,color .1s;
+	font-weight:bold;
+}
+
+.obj-name.obj-name-study{
+	background-color:black;
+	color:white;
+}
+
+#propertyExplanation{
+	background-color:black;
+	color:white;
+	padding:.25em;
+}
+
+/*Story setups*/
+#audio{
+	background-image:url("examples/bob-and-susie/~cover.jpg");
+	background-size:cover;
+	background-position:center;
+}
+	
+/*Set width and height to whatever you want*/
+.story{
+	width:100%;
+	height:500px;
+	margin:auto;
+	display:block;
+}
+
+.hidden{
+	display:none;
+}
+
+#websites-using{
+	text-align:center;
+}
+
+#websites-using img{
+	max-width:100%;
+}
+
+/*Footer*/
+
+footer{
+	width:100%;
+	margin:0;
+	background-color:#fb7f15;
+	color:white;
+	text-align:center;
+	font-size:.75em;
+}
+
+footer p{
+	margin:0;
+	padding:.5em;
 }
