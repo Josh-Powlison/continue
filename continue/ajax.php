@@ -345,6 +345,6 @@ if($goals){
 }
 
 $response['message']=ob_get_clean();
-echo json_encode($response);
+echo json_encode($response,JSON_NUMERIC_CHECK);
 
 ?>
