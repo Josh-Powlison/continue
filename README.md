@@ -1,4 +1,4 @@
-<img src="design-files/logo.svg" width="100"><br>[Check out demos on the website!](https://continue.heybard.com/)<br>[Download the latest version](https://github.com/joshpowlison/continue/releases)
+<img src="design-files/logo.svg" width="100"><br>[Check out a demo on the website!](https://continue.heybard.com/)<br>[Download the latest version](https://github.com/joshpowlison/continue/releases)
 
 # What is Continue?
 

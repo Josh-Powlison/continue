@@ -122,7 +122,6 @@ C.submit=function(){
 			stripe.createToken(card).then(result=>{
 				if(result.error){
 					reject(result.error.message);
-					console.log(result);
 				}else{
 					formData.append('stripeToken',result.token.id);
 					resolve();
@@ -137,7 +136,6 @@ C.submit=function(){
 		})
 		.then(response=>{return response.json();})
 		.then(json=>{
-			console.log(json);
 			message(json.message);
 			
 			updateValues(json);
@@ -208,8 +206,6 @@ function updateValues(json){
 	
 	usersEls.innerHTML=users(C.users);
 	totalPointsEls.innerHTML=C.totalPoints;
-	
-	console.log(C.goals);
 	
 	//Get the current goal
 	for(var i=0;i<C.goals.length;i++){
@@ -290,7 +286,6 @@ fetch('continue/ajax.php',{
 )
 .then(
 	json=>{
-		console.log(json);
 		if(json.success){
 			//Set the values right
 			
@@ -387,7 +382,6 @@ fetch('continue/ajax.php',{
 				event.preventDefault();
 				C.submit();
 			});
-			
 			
 			updateValues(json);
 		}
