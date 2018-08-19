@@ -1,5 +1,5 @@
 'use strict';
-function Continue(input={}){
+function Continue(input={form:null}){
 
 ///////////////////////////////////////
 ///////////PUBLIC VARIABLES////////////
@@ -8,24 +8,11 @@ function Continue(input={}){
 //Engine settings
 const C=this;
 
-//Set default values
-function d(v,val){C[v]=(input[v]!==undefined ? input[v] : val);}
+if(!input.form) throw 'Error: No form element passed to Continue.';
 
-/*VARIABLE				DEFAULT VALUE										*/
-d('form'			,	null												);
-d('points'			,	10													);
-d('money'			,	null												);
-d('pointsEls'		,	[]													);
-d('moneyEls'		,	[]													);
-d('messageEls'		,	[]													);
-d('totalPointsEls'	,	[]													);
-d('paymentInfoEl'	,	[]													);
-d('goalsEls'		,	[]													);
-d('usersEls'		,	[]													);
-d('purchasesEls'	,	[]													);
-d('userEl'			,	[]													);
-d('emailEl'			,	[]													);
-d('serviceEl'		,	[]													);
+C.form=input.form;
+C.points=0;
+C.money=0;
 
 ///////////////////////////////////////
 ///////////PUBLIC FUNCTIONS////////////
@@ -50,13 +37,15 @@ C.convert=function(to){
 }
 
 C.update=function(to){
+	var elements=(to==='money') ? moneyEls : pointsEls;
+	
 	//Go through each relevant element
-	for(var i=0;i<C[to+'Els'].length;i++){
+	for(var i=0;i<elements.length;i++){
 		var value=C[to];
 		
 		//If it's outputting to money and display isn't raw, get the local display for it!
 		if(to==='money'){
-			if(C[to+'Els'][i].tagName==='INPUT'){
+			if(elements[i].tagName==='INPUT'){
 				value=C[to]/100;
 			}else{
 				value=new Intl.NumberFormat('en-US',{style:'currency',currency:C.currency}).format(C[to]/100);
@@ -64,8 +53,8 @@ C.update=function(to){
 		}
 		
 		//Output to the tag, whether it's a value or innerHTML
-		if(C[to+'Els'][i].tagName==='INPUT') C[to+'Els'][i].value=value;
-		else C[to+'Els'][i].innerHTML=value;
+		if(elements[i].tagName==='INPUT') elements[i].value=value;
+		else elements[i].innerHTML=value;
 	}
 }
 
@@ -111,20 +100,22 @@ C.submit=function(){
 	formData.append('money',C.money);
 	formData.append('points',C.points);
 	formData.append('moneyAfterFees',C.fees(C.money));
-	formData.append('service',C.serviceEl.value);
+	formData.append('service',service.value);
 	formData.append('idempotencyKey',C.idempotencyKey);
+	
+	C.form.classList.add('continue-submitting');
 
 	new Promise(function(resolve,reject){
 		//Check values
-		if(!C.emailEl.checkValidity){
+		if(!email.checkValidity()){
 			reject('Your email is invalid!');
 		}
-		formData.append('email',C.emailEl.value);
+		formData.append('email',email.value);
 		
-		if(!C.userEl.checkValidity){
+		if(!userEl.checkValidity()){
 			reject('Your username is invalid!');
 		}
-		formData.append('user',C.userEl.value);
+		formData.append('user',userEl.value);
 		
 		//Stripe
 		if(C.services.stripe){
@@ -151,10 +142,13 @@ C.submit=function(){
 			
 			updateValues(json);
 		})
-		.catch(response=>{message(response);})
-		;
+		.catch(response=>{
+			message(response);
+			C.form.classList.remove('continue-submitting');
+		});
 	}).catch(input=>{
 		message(input);
+		C.form.classList.remove('continue-submitting');
 	});
 }
 
@@ -172,8 +166,8 @@ var currentGoal=0;
 
 function message(input){
 	//Put the message inside of the relevant element(s)
-	for(var i=0;i<C['messageEls'].length;i++){
-		C['messageEls'][i].innerHTML=input;
+	for(var i=0;i<messageEls.length;i++){
+		messageEls[i].innerHTML=input;
 	}
 }
 
@@ -205,8 +199,6 @@ function users(json){
 	return html;
 }
 
-C.currentGoalEl=document.querySelector('.continue-goals-current');
-
 function updateValues(json){
 	C.totalPoints=json.totalPoints;
 	C.users=json.users;
@@ -214,8 +206,8 @@ function updateValues(json){
 	C.goals=json.goals;
 	C.idempotencyKey=json.idempotencyKey;
 	
-	C.usersEls.innerHTML=users(C.users);
-	C.totalPointsEls.innerHTML=C.totalPoints;
+	usersEls.innerHTML=users(C.users);
+	totalPointsEls.innerHTML=C.totalPoints;
 	
 	console.log(C.goals);
 	
@@ -224,20 +216,18 @@ function updateValues(json){
 		//Skip this item if we have enough points and it's not last in the list
 		if(C.totalPoints>C.goals[i].points && i!==C.goals.length-1) continue;
 		
-		document.querySelector('.continue-points-goal').innerHTML='/'+C.goals[i].points;
-		document.querySelector('.continue-points-goal').dataset.goal=i;
+		C.form.querySelector('.continue-points-goal').innerHTML='/'+C.goals[i].points;
+		C.form.querySelector('.continue-points-goal').dataset.goal=i;
 		
 		//Set background bar to show amount to next
-		document.querySelector('.continue-points-info').style.background='linear-gradient(to right,#fdd3b1 '+Math.min((C.totalPoints/C.goals[i].points)*100,100)+'%,#cec5c1 0%)';
+		C.form.querySelector('.continue-points-info').style.background='linear-gradient(to right,#fdd3b1 '+Math.min((C.totalPoints/C.goals[i].points)*100,100)+'%,#cec5c1 0%)';
 		
 		updateGoal(i);
 		break;
 	}
+	
+	C.form.classList.remove('continue-submitting');
 }
-
-var goalsEl=document.querySelector('.continue-goals');
-var goalsPrevious=document.querySelector('.continue-goals-previous')
-var goalsNext=document.querySelector('.continue-goals-next')
 
 //Update current goal text
 function updateGoal(number=0){
@@ -273,26 +263,8 @@ function updateGoal(number=0){
 	
 	goalText+=C.goals[number].reward+' <img class="continue-inline-svg" src="continue/logo.svg"> '+C.goals[number].points;
 	
-	C.currentGoalEl.innerHTML=goalText;
+	currentGoalEl.innerHTML=goalText;
 }
-
-///////////////////////////////////////
-////////////EVENT LISTENERS////////////
-///////////////////////////////////////
-
-document.querySelector('.continue-goals-previous').addEventListener('click',function(event){
-	event.preventDefault();
-	updateGoal(currentGoal-1);
-});
-
-document.querySelector('.continue-goals-next').addEventListener('click',function(event){
-	event.preventDefault();
-	updateGoal(currentGoal+1);
-});
-
-document.querySelector('.continue-points-goal').addEventListener('click',function(event){
-	updateGoal(parseInt(event.target.dataset.goal));
-});
 
 ///////////////////////////////////////
 /////////////////START/////////////////
@@ -301,9 +273,13 @@ document.querySelector('.continue-points-goal').addEventListener('click',functio
 var stripe;
 var card;
 
+C.form.classList.add('continue-form');
+
 //Get info on payment setup from ajax.php; we'll also submit payment TO ajax.php. This way, we don't have to adjust data in two places; we can trust the data will be the same when we start up the form, and when we submit.
 var formData=new FormData();
 formData.append('call','get');
+
+var pointsEls, moneyEls, messageEls, totalPointsEls, paymentInfoEl, usersEls, userEl, email, goalsEl, goalsPrevious, goalsNext, currentGoalEl, service;
 
 fetch('continue/ajax.php',{
 	method:'POST',
@@ -316,12 +292,56 @@ fetch('continue/ajax.php',{
 	json=>{
 		console.log(json);
 		if(json.success){
+			//Set the values right
+			
+			//Create the form if it's been passed
+			if(json.html){
+				C.form.innerHTML=json.html;
+				
+				///////////////////////////////////////
+				///////////////ELEMENTS////////////////
+				///////////////////////////////////////
+				
+				pointsEls=C.form.querySelectorAll('.continue-points');
+				moneyEls=C.form.querySelectorAll('.continue-money');
+				messageEls=C.form.querySelectorAll('.continue-message');
+				totalPointsEls=C.form.querySelector('.continue-total-points');
+				usersEls=C.form.querySelector('.continue-users');
+
+				userEl=C.form.querySelector('.continue-user');
+				email=C.form.querySelector('.continue-email');
+				
+				goalsEl=C.form.querySelector('.continue-goals');
+				goalsPrevious=C.form.querySelector('.continue-goals-previous')
+				goalsNext=C.form.querySelector('.continue-goals-next')
+				currentGoalEl=C.form.querySelector('.continue-goals-current');
+				
+				paymentInfoEl=C.form.querySelector('.continue-card');
+				
+				service=C.form.querySelector('.continue-service');
+				
+				///////////////////////////////////////
+				////////////EVENT LISTENERS////////////
+				///////////////////////////////////////
+
+				C.form.querySelector('.continue-goals-previous').addEventListener('click',function(event){
+					event.preventDefault();
+					updateGoal(currentGoal-1);
+				});
+
+				C.form.querySelector('.continue-goals-next').addEventListener('click',function(event){
+					event.preventDefault();
+					updateGoal(currentGoal+1);
+				});
+
+				C.form.querySelector('.continue-points-goal').addEventListener('click',function(event){
+					updateGoal(parseInt(event.target.dataset.goal));
+				});
+			}
 			C.ratio=json.ratio;
 			C.currency=json.currency;
 			C.feeCalc=json.feeCalc;
 			C.services=json.services;
-			
-			updateValues(json);
 			
 			//Run through services
 			if(C.services.stripe){
@@ -336,7 +356,7 @@ fetch('continue/ajax.php',{
 					var elements=stripe.elements();
 					
 					card=elements.create('card');
-					card.mount(C.paymentInfoEl);
+					card.mount(paymentInfoEl);
 				});
 			}
 			
@@ -345,17 +365,17 @@ fetch('continue/ajax.php',{
 			moneyToPoints=tempSplit[1]/tempSplit[0];
 			
 			//Add event listeners for points input(s)
-			for(var i=0;i<C['pointsEls'].length;i++){
-				if(C['moneyEls'][i].tagName==='INPUT') C['pointsEls'][i].addEventListener('input',function(){
+			for(var i=0;i<pointsEls.length;i++){
+				if(moneyEls[i].tagName==='INPUT') pointsEls[i].addEventListener('input',function(){
 					C.points=this.value;
 					C.convert('money');
 				});
 			}
 			
 			//Add event listeners for money input(s)
-			for(var i=0;i<C['moneyEls'].length;i++){
-				if(C['moneyEls'][i].tagName==='INPUT'){
-					C['moneyEls'][i].addEventListener('input',function(){
+			for(var i=0;i<moneyEls.length;i++){
+				if(moneyEls[i].tagName==='INPUT'){
+					moneyEls[i].addEventListener('input',function(){
 						C.money=this.value*100;
 						C.convert('points');
 					});
@@ -367,6 +387,9 @@ fetch('continue/ajax.php',{
 				event.preventDefault();
 				C.submit();
 			});
+			
+			
+			updateValues(json);
 		}
 	}
 );

@@ -1,5 +1,4 @@
 /* Forms */
-
 .continue-form{
 	margin:auto;
 	width:20rem;
@@ -174,6 +173,23 @@ input.continue-points{
 	border:none;
 	padding:.5em;
 	cursor:pointer;
+	
+	transition:background-color .2s;
+}
+
+.continue-submit:hover{
+	background-color:#9d500e;
+}
+
+/*Applies to form when submitting*/
+.continue-submitting{
+	pointer-events:none;
+	user-select:none;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	
+	opacity:.5;
 }
 
 /* Tables */

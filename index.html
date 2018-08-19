@@ -37,58 +37,12 @@
 
 <p>You can test the following form with the card number "4242 4242 4242 4242" and any future expiration date (I don't recommend putting your actual card number in here, you might still get charged).</p>
 
-<form class="continue-form">
-	<div class="continue-points-info">
-		<p class="continue-points-current"><img class="continue-inline-svg" src="continue/logo.svg"><span id="totalPoints">0</span></p>
-		<p class="continue-points-goal">/0</p>
-	</div>
-	<div class="continue-goals">
-		<p class="continue-goals-previous"></p>
-		<p class="continue-goals-current">No goals</p>
-		<p class="continue-goals-next"></p>
-	</div>
-	<div class="continue-purchase">
-		<input class="continue-money" id="money" name="money" data-val="money" type="number" value="0" min="0" step=".01">
-		<input class="continue-points" id="points" name="points" data-val="points" type="number" value="0" min="0" step="1" pattern="\d*" max="99999">
-	</div>
-
-	<div class="continue-payment-methods">
-		<img class="continue-payment-logo" src="continue/payment-providers/stripe.svg">
-		<div id="cardElement" class="continue-card"></div>
-	</div>
-	
-	<input class="continue-input-default" id="user" name="user" type="text" placeholder="Your Name">
-	<input class="continue-input-default" id="email" name="email" type="email" placeholder="address@email.com">
-
-	<input id="service" name="service" value="stripe" type="hidden">
-	<input name="idempotencyKey" value="" type="hidden">
-
-	<p id="messageSpot" class="continue-message"></p>
-	
-	<button class="continue-submit">Submit</button>
-	
-	<div id="users" class="continue-users"></div>
-</form>
+<form id="continue-form"></form>
 
 <script src="continue/script.js"></script>
 <script>
 var test=new Continue({
-	form:document.getElementsByTagName("FORM")[0]
-	,pointsEls:[
-		document.getElementById("points")
-	]
-	,moneyEls:[
-		document.getElementById("money")
-	]
-	,messageEls:[
-		document.getElementById("messageSpot")
-	]
-	,totalPointsEls:document.getElementById('totalPoints')
-	,paymentInfoEl:document.getElementById('cardElement')
-	,usersEls:document.getElementById('users')
-	,userEl:document.getElementById('user')
-	,emailEl:document.getElementById('email')
-	,serviceEl:document.getElementById('service')
+	form:document.getElementById('continue-form')
 });
 </script>
 
@@ -102,29 +56,12 @@ var test=new Continue({
 
 <p>4. Adjust settings in <em>ajax.php</em> to suit your needs (if available, use testing keys until you've tested it thoroughly!).</p>
 
-<p>5. Use this HTML:</p>
+<p>5. Use this HTML, replacing <em>formElement</em> with a pointer to a form:</p>
 
 <pre>
 &lt;script src="continue/script.js"&gt;&lt;/script&gt;
-&lt;script&gt;new Continue;&lt;/script&gt;
+&lt;script&gt;new Continue({form:formElement});&lt;/script&gt;
 </pre>
-
-<p>To customize your Continue, look at the code below! Most of the settings are in the PHP file.</p>
-
-<pre>
-&lt;script&gt;
-new Continue({
-<span id="code"></span>
-});
-&lt;/script&gt;
-
-<p id="propertyExplanation"></p></pre>
-
-<!--<h2>Used by:</h3>
-<div id="websites-using"><a href="http://gameplanmanga.com" target="_blank"><img src="images/gameplan-banner.jpg"></a></div>
-<p><small>Email me at <a href="mailto:joshuapowlison@gmail.com" target="_blank">joshuapowlison@gmail.com</a> if you want to be included in the list! I will not include NSFW stories.</small></p>-->
-
-<script src="script.js"></script>
 
 </main>
 <footer><p>Continue is Open Source under an MIT License. Version in Demo: DEV BRANCH</p></footer>
